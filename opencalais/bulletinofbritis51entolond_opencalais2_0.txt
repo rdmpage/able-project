@@ -1,0 +1,264 @@
+City
+London
+London SW75BD
+Paris
+Geneva
+Madrid
+Fukuoka
+Sapporo
+Gembloux
+Warsaw
+Paattinen
+Ottawa
+Sassari
+Manchester
+Philadelphia
+Kagoshima
+Sadovo
+Turin
+Norwich
+Amsterdam
+Gainsville
+Bologna
+Genoa
+Kishinev
+Wageningen
+Brussels
+Ann Arbor
+Sofia
+Wroclaw
+Uppsala
+Helsinki
+Basle
+Budapest
+Zagreb
+Leiden
+Stockholm
+Oxford
+Lund
+Victoria
+Munich
+Ede
+Copenhagen
+Melbourne
+Washington
+Vienna
+Leningrad
+Edinburgh
+Holotype cf
+Aviemore
+Hamburg
+Bussum
+Syntypes cf
+Czechoslovakia
+RNH
+Sakhalin
+Limassol
+Sverdlovsk
+Corsica
+RSM
+Tokyo
+Lectotype cf
+MUM
+Sheffield
+Rumania
+Istanbul
+Nether-lands
+Ewen
+Delhi
+Berlin
+Frankfurt am Main
+Lorimer
+Cambridge
+Nurnberg
+Meyer
+Ingolstadt
+St. Petersburg
+Canberra
+Taichung
+Rodendorf
+New
+Western New
+New York
+Cape Town
+Slough
+Urbana
+L. A.
+TWO New
+York
+Chicago
+San Francisco
+Jerusalem
+Toronto
+Sydney
+Auckland
+Baltimore
+Leipzig
+Monterey
+Bombay
+Rio de Janeiro
+Melville
+Canterbury
+Chester
+Aberdeen
+Surrey
+Durham
+Yorkshire
+Northumberland
+Odessa
+Cannes
+Kehlheim
+Hertfordshire
+Bath
+Raasay
+Stuttgart
+Buchwald
+Bury
+Continent
+North America
+Europe
+EUROPE
+America
+Australia
+South America
+Africa
+Antarctica
+Asia
+Central America
+Country
+United Kingdom
+Argentina
+Great Britain
+The Netherlands
+Italy
+Japan
+U.S.S.R.
+United States
+Switzerland
+Belgique
+Bulgaria
+Poland
+Belgium
+France
+Canada
+Finland
+Spain
+Sweden
+Hungary
+Austria
+Israel
+Yugoslavia
+Denmark
+India
+WEST GERMANY
+Ireland
+Portugal
+West Germany
+Germany
+Tunisia
+Turkey
+EAST GERMANY
+Islamic Republic of Iran
+Mongolia
+Norway
+East Germany
+Greece
+Nepal
+Cyprus
+Korea
+China
+Iceland
+Greenland
+Morocco
+Burma
+the Philippines
+Philippines
+Algeria
+Italia
+Mexico
+Australia
+Taichung
+New Zealand
+Guinea
+Madagascar
+Chile
+Taiwan
+Sri Lanka
+Peru
+Malaysia
+Costa Rica
+Jordan
+Bolivia
+Brazil
+New Caledonia
+Solomon Islands
+The Philippines
+Britain
+Soviet Union
+Mauritius
+Sverige
+Micronesia
+Thailand
+Paraguay
+Luxembourg
+Scotland
+Wales
+Isle of Man
+Guernsey
+Deutschland
+Danmark
+ProvinceOrState
+Maryland
+Florida
+Quebec
+Washington
+Victoria
+Himachal Pradesh
+South Carolina
+Uttar Pradesh
+Paphos
+New Mexico
+Assam
+North Carolina
+Sardinia
+A. B.
+Rhode Island
+N.F.
+Astrakhan
+N. F.
+Hawaii
+Iowa
+New Brunswick
+Queensland
+Tasmania
+Massachusetts
+Illinois
+Michigan
+California
+Minnesota
+Kansas
+New South Wales
+British Columbia
+Georgia
+Texas
+South Australia
+Sicily
+Vermont
+Kent
+Sussex
+St Albans
+Nova Scotia
+Region
+Mediterranean
+Central Asia
+Scandinavia
+central Europe
+Far East
+British Isles
+SouthEast Asia
+Patagonia
+western Europe
+Middle East
+east Africa
+South Pacific
+eastern Europe

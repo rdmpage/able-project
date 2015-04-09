@@ -1,0 +1,27 @@
+<?php
+/**
+ * Invoke uBio's FindIT web service using file_get_contents to identify taxon names in a document
+ * @author  Dauvit King
+ * @package ABLE_project
+ * @since   October 2009
+ * @ver     1.0
+ */
+
+// set up script
+echo "\nHello from run_FindIT\nWaiting for ubio.org...\n";         // confirm we're running
+
+// specify names and parameters
+// change $fin URL to point to source file
+// change $fin strict value to 0 for greater flexibility: "setting to 1 will only find names without authorship. Strict mode finds valid nameString more reliably"
+$fin = 'http://www.ubio.org/webservices/service.php?function=findIT&url=http://mcs.open.ac.uk/djk263/bulletinofbritis53entolond_djvu.txt&strict=1';
+$fn_out = 'C:\ABLE\BoB\wip\bulletinofbritis53entolond_FindIT.xml'; // specify output file
+
+
+$fout = fopen($fn_out, 'w') or exit("Failed to open output text file: {$fn_out} \n");
+$buffer = file_get_contents($fin, FILE_BINARY);                    // read response from uBio - note use of binary to cope with special chars
+fwrite($fout, $buffer);                                            // write response to output file
+
+// close down script
+fclose($fout) or exit("Unable to close output file {$fout}\n");    // close output file
+echo "Goodbye from run_FindIT\n";                                  // confirm we've finished
+?>

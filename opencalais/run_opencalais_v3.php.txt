@@ -1,0 +1,198 @@
+<?php
+/**
+ *
+ * Script to invoke OpenCalais web service to identify entity names in source texts.
+ * Version 1.n used DjVU text as input source, changed now to TEI XML derived from ABBYY XML.
+ * The text contents of the two sources are different.
+ * 
+ * Output is written to a file for later processing.
+ * Duplicates are not written, but orthographic variants are.
+ * The names identified by OpenCalais could have been applied to the exemplar directly by this script,
+ * but then the names wouldn't be available for other uses, such as building indexes.
+ *
+ * Originally script used Dan Grossman's Open Calais Tags class (http://www.dangrossman.info).
+ * Tweaked because Dan's class uses the deprecated split() instead of explode()
+ * and also to process only those entities of interest to us.
+ * Later changed from using Tags class because it failed when tested on a machine
+ * that did not have cURL compiled into PHP.
+ * So changed script to use universally available php function, file_get_contents(),
+ * as referenced in my Taxacom post as a 'quick and dirty' way to invoke web services.
+ * (The example in the post was Google Scholar).
+ * This makes the script a 'better' example to post on our website because it does not
+ * require the user to reinstall PHP to incorporate cURL, *it just works*.
+ * Note, http calls 'should' be made using cURL as it is more robust and flexible,
+ * but for our simple use of OpenCalais's web services it is not necessary.
+ *
+ * Version 3 adds application of OpenCalais response into this script
+ * rather than have it as a separate process.
+ * This should be more efficient because the entities identified by OpenCalais MUST be found in the
+ * content just submitted for analysis. Therefore, applying the results straight away should be better.
+ *
+ * Note, script not optimised, functions and interplay of variables certainly need attention.
+ * There are various issues around the use of OpenCalais that need to be resolved before committig further effort to this script.
+ * @author  Dauvit King
+ * @package ABLE_project
+ * @param   string $volume - BHL version of volume name
+ * @since   December 2009
+ * @version 3.0
+ */
+
+/**
+ * set up script
+ */
+echo "\nHello from run_opencalais\n";
+// get volume name
+if ($argc == 2) {
+    $volume = $argv[1];
+} else {
+    exit("No volume name supplied\nScript closing\n");
+}
+// confirm we can run
+if (file_exists('C:\ABLE\BoB\wip\\'.$volume.'_tei_annotated.xml')) {
+    echo "Processing {$volume} files\n";
+} else {
+    exit("No files named {$volume} found\nScript closing\n");
+}
+// open files
+$fn_in = 'C:\ABLE\BoB\wip\\'.$volume.'_tei_annotated.xml';
+$fin = fopen($fn_in, 'r') or exit("Unable to open input file {$fn_in}\n");
+$fn_out1 = 'c:\able\bob\wip\\'.$volume.'_opencalais3.txt';
+$fout1 = fopen($fn_out1, 'w') or exit("Unable to open output file: {$fn_out1} \n");
+$fn_out2 = 'c:\able\bob\wip\\'.$volume.'_tei_annotated_oc.xml';
+$fout2 = fopen($fn_out2, 'w') or exit("Unable to open output file: {$fn_out2} \n");
+// OpenCalais parameters
+$licenseID = urlencode('9ex8t54yrpt4c597dvedme4x');
+$paramsXML = urlencode('<c:params xmlns:c="http://s.opencalais.com/1/pred/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"> ' .
+    '<c:processingDirectives c:contentType="TEXT/RAW" c:outputFormat="TEXT/SIMPLE"></c:processingDirectives> ' .
+    '<c:userDirectives c:allowDistribution="false" c:allowSearch="false" c:externalID=" " c:submitter="ABLE"></c:userDirectives> ' .
+    '<c:externalMetadata><rdf:Description><c:caller>ABLE</c:caller></rdf:Description></c:externalMetadata></c:params>');
+// list of OpenCalais entities we want to process - edit this array if different entities required
+$entities = array('Country');
+// miscellaneous processing variables
+$found_names = array();         // list of found entities
+foreach ($entities as $e) {     // multi-dimensional array, so each entity type in own sub-array
+    $found_names[$e][] = $e;    // set first item of each sub-array to name of entity
+}
+$content = '';                  // temp holding place for processed input to pass to OpenCalais
+$length_of_content = 0;         // temp record of how much content is to be sent to OpenCalais
+$length_of_uline = 0;           // temp record of how much content is in the just urlencoded line
+$new_length_of_content = 0;     // temp record of how much content could be sent to OpenCalais, will break if more than 3000 chars. sent
+$response = '';                 // temp record of OpenCalais output
+$xline = '';                    // temp holding place for raw input to pass to apply_oc()
+
+/**
+ * main processing
+ */
+echo "Reading input...\n";
+// chunk input for processing
+while (!feof($fin)) {
+        $line = fgets($fin);                        // read next line
+        $sline = strip_tags($line);                 // remove XML leaving only text
+        $uline = urlencode($sline);                 // convert text ready for http call
+        $length_of_uline = strlen($uline);          // how much text in this line
+        $new_length_of_content = $length_of_content + $length_of_uline; // so how much text in total so far
+        if (3000 < $new_length_of_content) {        // is too long to add another line
+            echo "Calling OpenCalais...\n";
+            $response = call_oc($licenseID, $content, $paramsXML);  // so send what accumulated so far
+            echo "Applying response...\n";
+            apply_oc($response, $xline);       // add semantic mark up to XML
+            echo "Preserving response...\n";
+            preserve_oc($response);                 // save response to a text file
+            $content = $uline;                      // start new content
+            $length_of_content = $length_of_uline;  // and set length to match
+            $xline = $line;                         // start new XML buffer
+        } else {
+            $content .= $uline;                             // else append new content
+            $length_of_content = $new_length_of_content;    // and keep track of new length
+            $xline .= $line;                        // append source to XML buffer
+        }
+}
+// process any left over input
+if ('' != $content) {
+    echo "Calling OpenCalais...\n";
+    $response = call_oc($licenseID, $content, $paramsXML);
+    apply_oc($response, $xline);
+    echo "Preserving response...\n";
+    preserve_oc($response);
+}
+// print out multi-dimensional array prepared in process_oc
+foreach ($found_names as $entity_type=>$entity_value) {
+    foreach ($entity_value as $v) {
+        fwrite($fout1, $v."\n");
+    }
+}
+
+/**
+ * close down script
+ */
+fclose($fin) or exit("Unable to close input file {$fn_in}\n");
+fclose($fout1) or exit("Unable to close output file: {$fn_out1}\n");
+fclose($fout2) or exit("Unable to close output file: {$fn_out2}\n");
+echo "Goodbye from run_opencalais\n";
+
+// Functions **********************************************
+
+/**
+ * applies relevant OpenCalais XML response entities
+ * extracts entities specified in $entities array and applies them to source annotated TEI XML
+ * @param  $response string OpenCalais reply
+ */
+function preserve_oc($response) {
+    global $fout2, $xline;
+    fwrite($fout2, $xline);
+    return null;
+}
+
+/**
+ * calls OpenCalais web service for name entity recognition
+ * @param   $licenseID  OpenCalais API key
+ * @param   $content    urlencoded raw text from XML source
+ * @param   $paramsXML  OpenCalais parameters
+ * @return  $result     OpenCalais reply - either entities or error message
+ */
+function call_oc($licenseID, $content, $paramsXML) {
+    if ('' != $content) {                                   // sanity check!
+        $call = "http://api.opencalais.com/enlighten/rest/?licenseID={$licenseID}&content={$content}&paramsXML={$paramsXML}";
+        $result = file_get_contents($call, FILE_BINARY);    // capture OC result as a file stream, ensure can cope with 'funny' characters
+        if (strpos($result, "<Exception>") !== false) {     // oops, so let's see the message
+                $text = preg_match("/\<Exception\>(.*)\<\/Exception\>/mu", $result, $matches);
+                echo $matches[1];
+        }
+    }
+    return $result;
+}
+
+/**
+ * applies relevant OpenCalais XML response entities
+ * extracts entities specified in $entities array 
+ * and applies them to source XML
+ * and adds to array for printing later
+ * @param  $response  OpenCalais reply
+ * @param  $xline     source text passed as a reference so this function adds mark up to original XML and not to a copy of it
+ */
+function apply_oc($response, &$xline) {
+    global $entities, $found_names;
+    // ensure OpenCalais returned something to process
+    if ('' != $response) {
+        $dom = new DomDocument;
+        $dom->loadXML($response);
+        foreach($entities as $e)  {
+            // look in OpenCalais output for entries in our entity list
+            $names = $dom->getElementsByTagName($e);
+            foreach($names as $n)  {
+                $tmp = $n->textContent;
+                // temporarily removed handling of keywords when broken over two lines
+                //if (stripos($tmp, "\n") !== false) {
+                //    $tmp = 'TWO '.$tmp;
+                //} else {
+                    $xline = str_replace($tmp, '<tei:hi rend="'.$e.'">'.$tmp.'</tei:hi>', $xline);
+                //}
+                // ensure no duplicates otherwise save in found names array
+                if (!in_array($tmp, $found_names[$e])) {
+                    $found_names[$e][] = $tmp;
+                }
+            }
+        }
+    }
+}
+?>

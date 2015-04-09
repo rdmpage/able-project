@@ -1,0 +1,529 @@
+City
+London
+LINCOLN
+Bristol
+LONDON
+BOWMAN
+Wellington
+New York
+Copenhagen
+Frankfurt
+Paris
+Santa Cruz
+Hamburg
+WELLINGTON
+Durban
+Pisco
+Paita
+Bay ofIslands
+Varanger Fiord
+Grahamstown
+Omenak
+Upernavik
+Port Elizabeth
+Victoria
+Meneville
+Lincoln
+Talcahuano
+Ndola
+Tervuren
+Sevenoaks
+Zaire
+Kitui
+Elizabethville
+Solwezi Boma
+Washington
+Lusaka
+Newcastle
+Oslo
+Holsteinsborg Harbour
+Moscow
+Sendai
+Western Honshu
+Honshu
+The Hague
+Arctic Coastal Plain
+Roscoff
+Cambridge
+CAMBRIDGE
+LEVINE
+Czechoslovakia
+Central America
+Adelaide
+Geneva
+Plymouth
+Charge
+Cochin
+New
+Calcutta
+Kwangsi
+Baltimore
+Lakes Albert
+Lake Nabugabo
+Lake George
+Lakes Edward
+TWO Lake
+George
+Edinburgh
+Bengal
+Mian Mir
+Massowa
+Bathurst
+Chiromo
+Vienna
+Baudouinville
+Saboya
+Gambaja
+Antwerp
+Kiriba
+Guaso Nyiro
+Cherangani Hills
+Mount Elgon
+Post
+South Bugisu
+Baringo
+Lancaster
+Kitale
+Petauke
+Gondokoro
+Yagoua
+Didessa
+Bulcha
+TWO Ethiopia
+Gambela
+West Madi
+Nabumali
+LANCASTER
+Lahore
+Leipzig
+Berlin
+Manchester
+Bombay
+Rome
+Piemonte
+Ormea
+Lake Garda
+Esterel Mts
+Pierrefeu
+Amara
+Marseille
+Cairo
+Bona
+Bergamo
+Tunis
+Serdscen
+Massoncella
+Madras
+Flats
+Yafo
+Allahabad
+Tlemcen
+Natal
+Shiraz
+I.
+Mahe I.
+Oran
+Torbole
+Biskra
+Cilicia
+Oned-Zitoun
+Crimea
+Kappari
+Ancona
+Montpellier
+Palermo
+Biskra Mt
+Cyclades
+Hora Harsadi
+Naxos I.
+Cuenca
+Algiers
+Sahara
+Bou-Saada
+Atlas
+Istanbul
+Seville
+Baku
+Coruna
+Coimbra
+Saida
+Sugenheim
+Pumamarca
+San  Francisco
+Haute Atlas
+Caracas
+Almeria
+Herzegowina
+Dalmatia
+Constantine
+Valencia
+Sebastopol
+Riviera
+Sydney
+Bon-Merzong
+Djem DjemForest
+Marseilles
+Addis Ababa
+Forest
+Ficuzza
+Trentino
+Brixen
+Hokkaido
+Paler-mo
+Carthagena
+Menton
+Murviedro
+Lisbon
+Jujuy
+Buenos Aires
+Majunga
+Tashkent
+Deccan
+Phaleron
+Karnten
+Apennine Mts
+Siebenbiirgen
+Korfu I.
+Merano
+Lake Como
+Herzegovina
+Aulaona
+Abruzzi
+Stolac
+Arcachon
+Corfu I.
+Esterel
+Cartagena
+Navplion
+Madeira
+Otranto
+Cannes
+Ramlah
+Savona
+Constantina
+Jaffa
+Toscana
+Ouled   Anteurs
+Tenda
+Southern Tirol
+Hertfordshire
+Apennines
+Peninsula
+Rhodes
+Symi
+Amarah
+Landana
+Rangoon
+Kaffa
+Witu
+Manda I.
+Shoadistrict
+Lake Jipe
+Cameroons
+Hilgendorf
+Viota
+Bismarkburg
+Pyrenees
+Tambillo
+Timaru
+Karytein
+Ascinii Ghecu
+Addas
+Penang
+Selangore
+Marlborough
+Sfax
+Tripoli
+Transvaal
+Chantilly
+Guildford
+Zululand
+Matjesfontein
+Pretoria
+Sahana
+Sao Tome
+Silao
+Port  Elizabeth
+San Juan
+Ovamboland
+Le  Pouce
+Salisbury
+Downs
+Guayaquil
+Penang I.
+Hienghene
+York
+Tenasserim
+Pilam
+Borneo
+Rockhampton
+Aseinii Cheba
+Kelantan
+Auckland
+Bohol I.
+Rqckhampton
+Pines
+Taranga
+Assinie
+Taranga I.
+La Moka
+Firenze
+Java
+Semarang
+Stuttgart
+Stockholm
+Sarajevo
+Nurnberg
+Philippeville
+Oro
+Boccadifalco
+Jerusalem
+Gerez Mts
+Monchique
+Kibwezi
+Jebel Tarhuna Mts
+Santa    Ninfa
+Cyrenaica
+Kefallinia I.
+Stora
+Palmi
+Celinje
+Atri
+Kefallina
+Danilov Grad
+Scilla
+Njegos
+Spezia
+Bocadifalco
+Brescia
+Tabarka
+Bivona
+Nairobi
+Gardulla
+San Salvador
+S. Kaffa
+Nakuru
+Shoa
+Bogota
+Pulo Penang
+Paramaribo
+Anjouan I.
+Honolulu
+South   Shoa
+Rio   de   Janeiro
+Brasilia
+Nyasa
+Collected by Hilgendorf
+Recife
+Luanda
+Dakar
+Monaco
+Lyon
+JONES
+Tokyo
+Bangkok
+Kanchanaburi
+Lagoa Santa
+Dallas
+Continent
+Asia
+North America
+Africa
+ASIA
+AFRICA
+Central America
+ANTARCTICA
+N.America
+N.  America
+Australia
+South America
+Europe
+Country
+Great Britain
+Thailand
+New Zealand
+United States
+South Africa
+South Georgia
+Greenland
+Peru
+Norway
+Scotland
+Britain
+Canada
+Iceland
+Japan
+Chile
+United Kingdom
+Zambia
+Kenya
+Botswana
+Belgium
+Ethiopia
+Angola
+Rhodesia
+Congo
+Rwanda
+Burundi
+Ireland
+Pays-Bas
+France
+Wales
+Switzerland
+Germany
+Colombia
+Hungary
+The Netherlands
+Venezuela
+Australia
+United States of America
+Madagascar
+Spain
+Italy
+Bulgaria
+China
+Luxembourg
+Finland
+India
+Nederland
+Austria
+Vietnam
+Laos
+Cambodia
+Guinea
+Singapore
+Burma
+Uganda
+Malawi
+Tanzania
+Sudan
+Nigeria
+Cameroon
+Eritrea
+Gambia
+Senegal
+Cote d'Ivoire
+Sierra Leone
+Ghana
+Somalia
+Pakistan
+Iraq
+Algeria
+Tunisia
+Islamic Republic of Iran
+Palestine
+Israel
+Seychelles
+Turkey
+Mongolia
+Ukraine
+Greece
+Morocco
+Syria
+Portugal
+Yugoslavia
+Yemen
+Argentina
+Uzbekistan
+Albania
+Egypt
+Mauritius
+Togo
+Jamaica
+Malaysia
+Libya
+Grenada
+Mexico
+Brazil
+Nicaragua
+Ecuador
+New Caledonia
+Taiwan
+East Germany
+Indonesia
+Philippines
+Italia
+Sweden
+Montenegro
+Niger
+Costa Rica
+Ruanda
+Isle of Man
+Bermuda
+Monaco
+ProvinceOrState
+Rhode Island
+Michigan
+MEDWAY
+Victoria
+Shoa Province
+New York
+Washington
+Maine
+New Hampshire
+Alaska
+Shimane Prefecture
+Aomori Prefecture
+Aquitaine
+North Dakota
+Tasmania
+Medway
+Punjab
+Bihar
+Uttar Pradesh
+Darbhanga District
+Wollega Province
+Fort Jameson District
+Nova Scotia
+Northern Territory
+Lunda District
+Liguria
+Umbria
+Ganjam District
+Sicily
+Florida
+Sardinia
+Pennsylvania
+Apulia
+Venezia
+Veneto
+Bayern
+Tirol
+Shoa
+Assam
+Torbay
+Western Australia
+New South Wales
+Northampton
+Zanzibar
+Queensland
+Arkansas
+East Java
+Hawaii
+California
+New Brunswick
+Region
+TWO East
+Africa
+East Africa
+North Atlantic
+North  Atlantic
+North    Atlantic
+western Europe
+French West Africa
+AUSTRALASIA
+east coast
+EAST AFRICA
+east Africa
+West Africa
+British East Africa
+Indian Ocean
+Central Europe
+West Indies
+East   Africa
+Mediterranean
+West   Africa
+Balkans
+New England
+British Isles
+Antarctic

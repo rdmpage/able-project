@@ -1,0 +1,78 @@
+<?php
+/**
+ * How far can you get by extracting words that begin with an initial capital letter? (Regular expressions).
+ * @param   volume  the BHL compressed format name of the volume whose files are to be processed
+ * @author  Dauvit King
+ * @package ABLE_project
+ * @since   January 2010
+ * @ver     1.0
+ */
+
+/**
+ * The text input to this script was produced from the BHL *_djvu.txt file by running these unix commands:
+ * cat bulletinofbritis51entolond_djvu.txt | aspell list -d british --encoding=UTF-8 | sort -d -f | uniq > bulletinofbritis51entolond_djvu_aspell.txt
+ *
+ * Note 1) The test is for an initial capital letter, whether the rest of the word is capitalised is irrelevant to the test.
+ * Note 2) The GNI counter refers to the number of GNI references not the numbner of words that produce a reference.
+ *  The values differ because a word may produce more than one reference.
+ *  For example, Scrophulariaceae is recognised as both Scrophulariaceae and as Scrophulariaceæ.
+ */
+
+// confirm we are running
+echo "\nHello from initial capital\n";
+
+// check volume parameter
+if ($argc == 2) {
+    $volume = $argv[1];
+} else {
+    exit("No volume name supplied\nScript closing\n");
+}
+ 
+// in progress message
+echo "Processing {$volume} files\n";
+
+// open files
+$fin = fopen('C:\ABLE\BoB\wip\\'.$volume.'_djvu_aspell.txt', 'r') or exit("Unable to open input DjVu text file\n");
+$fout = fopen('C:\ABLE\BoB\wip\\'.$volume.'_i-c.txt', 'w') or exit("Unable to open output text file\n");
+
+// set variables
+$capital_count = 0;                             // counter for number of words with an initial capital letter
+$element_count = 0;                             // counter for the number of words
+$gni_count = 0;                                 // counter for the number of references in the Global Names Index
+$output = '';                                   // empty string used to build up each output line before writing to disk
+
+// in progress message
+echo "\nLooking for words with initial capital letters\n";
+while ($buffer = fgets($fin)) {                 // read to end of input text, one line at a time
+    $line = explode(' ', $buffer);              // make array from line of text, breaking on a space
+    foreach ($line as $element) {               // process array, each element array should be a word
+        $word = rtrim($element);                // remove trailing newline
+        $output .= $word;                       // start to build up output text
+        if (preg_match('/^[A-Z]/', $word)) {    // if initial capital could be useful to us, ie genus name
+            $output .= ' has an initial capital letter';    // add meaningful text to output string
+            $capital_count++;                   // increment initial capital letter counter
+            $buffer = file_get_contents('http://globalnames.org/name_strings.json?search_term=ns:'.$word);  // pass the word to GNI
+            $j = json_decode($buffer);          // convert the json response to a php object so that it is readable in this script
+            $n = $j->name_strings_total;        // see if GNI recognises the word, ie there is a name string in the response
+            if (0 < $n) {                       // yes there is
+                for ($i = 0; $i < $n; $i++){    // so loop through the names, yes there can be more than one!
+                    $output .= " and it really is {$j->name_strings[$i]->name}";    // and write out the GNI name to our output string
+                    $gni_count++;               // increment global name counter
+                }
+            }
+        }
+        fwrite ($fout, $output."\n");           // write output text
+        $element_count++;                       // increment word count
+        $output = '';                           // blank string for next line of input
+    }
+}
+
+// in progress message
+echo "\nCompleted looking for words with initial capital letters\n";
+
+fwrite ($fout, "The document has {$element_count} words\nof which {$capital_count} have initial capital letters\nand {$gni_count} are in the Global Names Index");
+// close down script
+$fin = fclose($fin) or exit("Unable to close input DjVu text file\n");
+$fout = fclose($fout) or exit("Unable to close output text file\n");
+echo "Goodbye from initial capital\n";
+?>

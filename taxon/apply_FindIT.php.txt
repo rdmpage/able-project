@@ -1,0 +1,111 @@
+<?php
+/**
+ * Script to apply the results from uBio's FindIT service to TEI file.
+ * @param   volume  the BHL compressed format name of the volume whose files are to be processed
+ * @author  Dauvit King
+ * @package ABLE_project
+ * @since   January 2010
+ * @ver     1.0
+ */
+
+// confirm we are running
+echo "\nHello from apply FindIT\n";
+
+// check  folder name
+if ($argc == 2) {
+    $volume = $argv[1];
+} else {
+    exit("No volume name supplied\nScript closing\n");
+}
+ 
+// message to prove we are running
+echo "Processing {$volume} files\n";
+
+// open files
+$fin = fopen('C:\ABLE\BoB\wip\\'.$volume.'_abbyy_to_tei_by_xmlreader.xml', 'r') or exit("Unable to open TEI input file\n");
+$fout = fopen('C:\ABLE\BoB\wip\\'.$volume.'_tei_with_FindIT.xml', 'w') or exit("Unable to open output file\n");
+$ftxn = simplexml_load_file('C:\ABLE\BoB\wip\\'.$volume.'_FindIT.xml') or exit("Unable to load FindIT input file\n");
+
+// in progress message
+echo "\nStarting to generate taXMLit elements\n";
+
+// array to hold list of taxon names and taXMLit data
+$a = array();
+
+// get entity elements
+$got_entity = $ftxn->xpath('/results/allNames/entity');
+
+foreach ($got_entity as $e) {
+    
+    // get nameString
+    $nameString = $e->nameString;
+        
+    // if single level name, ie no blanks space in nameString, then ignore
+    $result = stripos($nameString, ' ');
+    if ($result === false) { continue; }
+    
+    
+    // test if non-taxon name, if so do not use to mark up XML
+    // *** hard coded **** names for wrong values returned by uBio that should not be marked up
+    // please add to this test as required
+    // current names drawn from BoB51, which also gives test order
+    // 'and' occurs 318 times in BoB51, 'the' 142 times, and 'new' 6 times
+    // yes, I could code this as an array of text values and loop through them, but this inline approach is more efficient
+    // also note, stripos ignores case and is binary safe so will cope with variations and unicode characters
+    $result = stripos($nameString, 'and');
+    if ($result !== false) { continue; }
+    $result = stripos($nameString, 'the');
+    if ($result !== false) { continue; }
+    $result = stripos($nameString, 'new');
+    if ($result !== false) { continue; }
+    
+    // note the testing above is not perfect - there is one example in Bob51 where the genus abbreviation T. is expanded to T[he]
+    
+    // convert nameString back to how it appears in the text by removing the expansion and replacing it with a period
+    // yes, this could be coded as a one line regexp, but this approach is more efficient
+    $start = stripos($nameString, '[');
+    if ($start !== false) {
+        $end = stripos($nameString, ']')+1;
+        $str1 = mb_substr($nameString, 0, $start); // multi-byte substring to cope with unicode characters
+        $str2 = mb_substr($nameString, $end);
+        $nameString = $str1.'.'.$str2;
+    }
+    
+    // if no wrong values present in nameString then get canonical version of name and keep processing
+    $parsedName = $e->parsedName['canonical'];
+    $genusName = $e->parsedName->component[0];
+    $speciesName = $e->parsedName->component[1];
+    $namebankID = $e->namebankID;
+    
+    // format values to taXMLit 
+    $new_text = '<txm:TaxonHeading><txm:TaxonHeadingParagraph Explicit="true">'.$nameString.'</txm:TaxonHeadingParagraph><txm:TaxonHeadingName><txm:AlternateUsedInWork Source="current context"><txm:TaxonName Explicit="false">'.$parsedName.'</txm:TaxonName><txm:GenusName Explicit="false">'.$genusName.'</txm:GenusName><txm:SpeciesEpithet Explicit="false">'.$speciesName.'</txm:SpeciesEpithet></txm:AlternateUsedInWork></txm:TaxonHeadingName></txm:TaxonHeading><txm:GUID Source="uBio" Kind="namebankID" Explicit="false">'.$namebankID.'</txm:GUID>'."\n";
+    
+    // store formatted name as key with taXMLit as value into array for later searching in source XML
+    $temp = strval($nameString);
+    $a[$temp] = $new_text;
+
+}   // end of foreach $got_entity
+
+// now process found taxon names, adding taXMLit data into TEI XML file accordingly
+// create an array with just the taxon names
+$key_a = array_keys($a);
+
+while ($buffer = fgets($fin)) {         // read TEI XML one line at a time
+    fwrite($fout, $buffer);             // write out TEI XML to new file regardless
+    foreach ($key_a as $n) {            // loop through taxon name array
+        $pos = strpos($buffer, $n);     // checking to see if taxon name in TEI line just processes
+        if($pos !== false) {            // if it is
+            echo "Found {$n}\n";        // tell the user which taxon name has been found
+            fwrite($fout, $a[$n]);      // use taxon name as key to retrieve appropriate taXMLit data and write it to new file
+        }
+    }    
+}
+
+// in progress message
+echo "\nCompleted generating taXMLit elements\n";
+
+// close down script
+$fin = fclose($fin) or exit("Unable to close input xml file {$fn_in}\n");
+$fout = fclose($fout) or exit("Unable to close output xml file {$fn_out}\n");
+echo "\nGoodbye from apply FindIT\n";
+?>
